@@ -5,14 +5,14 @@ export type ClientsDocument = Client & Document;
 
 @Schema()
 export class Client {
-    @Prop()
-    workoutName: string;
+  @Prop()
+  name: string;
 
-    @Prop()
-    programme: string;
+  @Prop()
+  programme: string;
 
-    @Prop()
-      members:string[];
+  @Prop()
+  members: string[];
 
 }
 

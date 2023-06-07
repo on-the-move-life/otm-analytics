@@ -9,9 +9,7 @@ export class ClientsService {
   constructor(@InjectModel(Client.name) private clientsModel:Model<ClientsDocument>){  }
 
   async findAll(): Promise<ClientsDocument[]> {
-    let x= await this.clientsModel.find();
-    // console.log(x[0].members)
-    return x;
+    return await this.clientsModel.find();
   }
 
   
