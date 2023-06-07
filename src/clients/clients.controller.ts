@@ -10,5 +10,12 @@ export class ClientsController {
   async findAll() {
     return await this.clientsService.findAll();
   }
+
+  @Get("/member/activity/last")
+  async getMemberLastActivity() {
+    return await this.clientsService.getMemberLastActivity();
+  }
+
+  
   
 }

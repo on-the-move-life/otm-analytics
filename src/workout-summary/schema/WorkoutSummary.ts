@@ -10,6 +10,10 @@ export class WorkoutSummary {
 
     @Prop()
     name: string;
+
+    @Prop()
+    created: Date;
+
 }
 
 export const WorkoutSummarySchema = SchemaFactory.createForClass(WorkoutSummary);

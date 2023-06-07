@@ -3,9 +3,9 @@ import { Inject, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ClientsModule } from './clients/clients.module';
-import { UserModule } from './user/user.module';
 import { WorkoutSummaryModule } from './workout-summary/workout-summary.module';
 import { ClientsService } from './clients/clients.service';
+import { MemberModule } from './member/member.module';
 
 
 @Module({
@@ -23,7 +23,8 @@ import { ClientsService } from './clients/clients.service';
       inject:[ConfigService]
     }),
     ClientsModule,
-    WorkoutSummaryModule
+    WorkoutSummaryModule,
+    MemberModule
   ],
   controllers: [],
   providers: [],
