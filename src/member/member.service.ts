@@ -31,8 +31,8 @@ export class MemberService {
 
     const memberInfo = await this.findOneByCode(memberCode)
     // get all programs
-    const workoutSummaryData = await this.workoutSummaryService.findAll() 
-    return workoutSummaryData.filter(d => d.name == memberInfo.name)[0]
+    const workoutSummaryData = await this.workoutSummaryService.findOne(memberInfo.name) 
+    return workoutSummaryData
 
   }
 

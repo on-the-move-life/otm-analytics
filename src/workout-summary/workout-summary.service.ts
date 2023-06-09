@@ -15,4 +15,8 @@ export class WorkoutSummaryService {
     return await this.workoutSummaryModel.find().sort({"_id": -1});     
   } 
 
+  async findOne(memberName:string): Promise<WorkoutSummaryDocument> {
+    return await this.workoutSummaryModel.findOne({name:memberName},null,{sort:{_id:-1}});     
+  } 
+
 }
