@@ -9,10 +9,10 @@ export class ClientsService {
 
   constructor(
     @InjectModel
-    (Client.name) 
-    private clientsModel:Model<ClientsDocument>,
+      (Client.name)
+    private clientsModel: Model<ClientsDocument>,
     private memberService: MemberService
-  ){  }
+  ) { }
 
   async findAll(): Promise<ClientsDocument[]> {
     return await this.clientsModel.find();
@@ -20,7 +20,7 @@ export class ClientsService {
 
   async getMemberLastActivity() {
 
-    const dayBeforeWorkout=[]
+    let workoutPerformed = [],noWorkoutPerformed=[],res=[]
     const clients = await this.findAll()
     // console.log("clients",clients)
     for (let i = 0; i < clients.length; i++) {
@@ -30,28 +30,40 @@ export class ClientsService {
         const memberCode = programInfo.members[j];
         // console.log(memberCode);        
         const lastWorkout = await this.memberService.getMemberWorkoutSummaryLatest(memberCode)
-        // console.log(lastWorkout)
+        // console.log(memberCode,"works",lastWorkout.name)
         if (lastWorkout && lastWorkout.created) {
-          let dateBefore=lastWorkout.created
-          let dateToday=new Date();
+          let dateBefore = lastWorkout.created
+          let dateToday = new Date();
           // console.log(memberCode,"before",lastWorkout.created,"today",new Date());
           let timeDifference = Math.abs(dateToday.getTime() - dateBefore.getTime());
           let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-          console.log(differentDays)
-          dayBeforeWorkout.push({
-            code:memberCode,
-            daysBefore:differentDays
+          // console.log(differentDays)
+          workoutPerformed.push({
+            code: memberCode,
+            daysBefore: differentDays
           })
-        }     
-        
-        
+        }
+        else if(!lastWorkout){
+          noWorkoutPerformed.push({
+            code: memberCode,
+          })
+        }
       }
-      
     }
-    return dayBeforeWorkout
+    const key='daysBefore'
+    workoutPerformed.sort((a, b) => b.daysBefore - a.daysBefore)
+    // console.log("x",new Map[workoutPerformed[0][key],workoutPerformed[0]].values())
+    workoutPerformed = [...new Map(workoutPerformed.map(item =>
+      [item[key], item])).values()
+    ];
+    res.push({
+      workoutPerformed:workoutPerformed,
+      noWorkoutPerformed:noWorkoutPerformed
+    })
+    return res;
 
   }
 
-  
+
 
 }
